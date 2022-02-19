@@ -1,8 +1,8 @@
 <template>
  <section class="catalog">  <!--Секция каталог товаров-->
 
-        <ProductList :products="products"> <!--Компонент со списком  товаров-->
-
+        <ProductList :products="products"/>    <!--Компонент со списком  товаров-->
+          <ProductItem :products="products"/>
         <ul class="catalog__pagination pagination"><!--Слайдер ...  На   след. страницу-->
           <li class="pagination__item">
             <a class="pagination__link pagination__link--arrow pagination__link--disabled"
@@ -57,10 +57,11 @@
 <script>
 import products from './data/products'; /* Импортируем массив с товарами */
 import ProductList from './components/ProductList.vue';/* Импортируем компонент  */
+import ProductItem from './components/ProductItem.vue';
 
 export default {
   name: 'App',
-  components: { ProductList },
+  components: { ProductList, ProductItem },
   data() {
     return {
       products,
