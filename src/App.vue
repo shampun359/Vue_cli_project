@@ -1,11 +1,8 @@
 <template>
  <section class="catalog">  <!--Секция каталог товаров-->
 
-<<<<<<< Updated upstream
-        <ProductList :products="products"> <!--Компонент со списком  товаров-->
-=======
+        <ProductList :products="products"/> <!--Компонент со списком  товаров-->
         <ProductList :products="products"/>    <!--Компонент со списком  товаров-->
->>>>>>> Stashed changes
 
         <ul class="catalog__pagination pagination"><!--Слайдер ...  На   след. страницу-->
           <li class="pagination__item">
