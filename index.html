@@ -32,11 +32,21 @@
           <p class="price">
             {{product.price | formatPrice}}
           </p>
-          <button class=" btn btn-primary btn-lg"
+          <button class="btn btn-primary btn-lg"
             v-on:click="addToCart"
             v-if="canAddToCart">Add to cart</button>
-            <button disabled="true" class=" btn btn-primary btn-lg"
-              v-else >Add to cart</button>
+          <button disabled="true" class="btn btn-primary btn-lg"
+            v-else >Add to cart</button>					
+          <span class="inventory-message" 
+            v-if="product.availableInventory - cartItemCount === 0">All Out! 
+          </span>
+          <span class="inventory-message" 
+            v-else-if="product.availableInventory - cartItemCount < 5">      
+            Only {{product.availableInventory - cartItemCount}} left!
+          </span>
+          <span class="inventory-message" 
+            v-else>Buy Now!							   
+          </span>
         </div>
       </div>
       <div v-else>
@@ -151,14 +161,14 @@
         sitename: "Vue.js Pet Depot",
         showProduct: true,
         a: false,
-        states: {
+        states: { // Объект штатов для  формы
           AL: 'Alabama',
           AK: 'Alaska',
           AR: 'Arizona',
           CA: 'California',
           NV: 'Nevada'
         },
-        order: {
+        order: { // Объект для формы
           firstName: '',
           lastName: '',
           address: '',
@@ -172,49 +182,49 @@
           sendGift: 'Send As A Gift',
           dontSendGift: 'Do Not Send As A Gift'
         },
-        product: {
+        product: { // Товар
           id: 1001,
           title: "Cat Food, 25lb bag",
           description: "A 25 pound bag of <em>irresistible</em>, organic goodness for your cat.",
           price: 2000,
           image: "assets/images/product-fullsize.png",
-          availableInventory: 5
+          availableInventory: 10
         },
         cart: []
       },
       methods: {
-        addToCart: function() {
-          this.cart.push( this.product.id );
+        addToCart: function() { // Добавление товара в  корзину
+          this.cart.push( this.product.id ); // В  массив cart добавляется id продукта (ссылка на него)
         },
-        showCheckout() {
-          this.showProduct = this.showProduct ? false: true;
+        showCheckout() { //При вызове функции правда/ложь меняется
+          this.showProduct = this.showProduct ? false: true; //  Глава 3-4
         },
-        submitForm() {
+        submitForm() {    //Отправленная форма
           alert('Submitted');
         }
       },
       computed: {
-        cartItemCount() {
-          return this.cart.length || '';
+        cartItemCount() { // Кол-во добавлений в корзину
+          return this.cart.length || ''; //Кол-во элементов в массиве cart
         },
-        canAddToCart() {
+        canAddToCart() { // Логическое сравнение кол-во  товара  и  кол-во добавленного  в корзину
           return this.product.availableInventory > this.cartItemCount;
         }
       },
       filters: {
-        formatPrice(price) {	//#B
-          if (!parseInt(price)) { return ""; }	//#C
-          if (price > 99999) {	//#D
-            var priceString = (price / 100).toFixed(2);	//#E
-            var priceArray = priceString.split("").reverse();	//#F
-            var index = 3;	//#F
-            while (priceArray.length > index + 3) {	//#F
-              priceArray.splice(index+3, 0, ",");	//#F
-              index += 4;	//#F
-            }	//#F
-            return "$" + priceArray.reverse().join("");	//#G
+        formatPrice(price) {	// Формат цены
+          if (!parseInt(price)) { return ""; }	
+          if (price > 99999) {	
+            var priceString = (price / 100).toFixed(2);	
+            var priceArray = priceString.split("").reverse();	
+            var index = 3;	
+            while (priceArray.length > index + 3) {	
+              priceArray.splice(index+3, 0, ",");	
+              index += 4;	
+            }	
+            return "$" + priceArray.reverse().join("");	
           } else {
-            return "$" + (price / 100).toFixed(2);	//#H
+            return "$" + (price / 100).toFixed(2);	
           }
         }
 
